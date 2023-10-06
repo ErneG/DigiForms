@@ -1,3 +1,48 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier" //prettier removes some rules
+  ],
+  "rules": {
+    "react/prop-types": 0,
+    "react/react-in-jsx-scope": 0
+  },
+  "plugins": [
+    "react",
+    "import", //for import errors
+    "jsx-a11y" //for accessibility
+  ],	
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true //enable jsx
+    }
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect" //detect react version
+    },
+    "import/resolver": {
+      "node":
+      {
+        "extensions":
+        [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    }
+  }
 }
