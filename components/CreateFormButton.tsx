@@ -1,4 +1,5 @@
 'use client';
+
 import { formSchema, formSchemaType } from '@/schemas/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -6,6 +7,7 @@ import { ImSpinner2 } from 'react-icons/im';
 import { BsFileEarmarkPlus } from 'react-icons/bs';
 import * as z from 'zod';
 import { Button } from './ui/button';
+
 import {
     Dialog,
     DialogContent,
@@ -15,14 +17,28 @@ import {
     DialogTitle,
     DialogTrigger
 } from './ui/dialog';
+
 import {
     Form,
     FormControl,
+=======
+import React from 'react';
+import { BsFileEarmarkPlus } from 'react-icons/bs';
+import { ImSpinner2 } from 'react-icons/im';
+import { Button } from './ui/button';
+import { Label } from './ui/label';
+import {
+    Form,
+    FormControl,
+    FormDescription,
+
     FormField,
     FormItem,
     FormLabel,
     FormMessage
 } from './ui/form';
+
+
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { toast } from './ui/use-toast';
@@ -31,9 +47,26 @@ import { useRouter } from 'next/navigation';
 
 function CreateFormButton() {
     const router = useRouter();
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { useForm } from 'react-hook-form';
+
+const formSchema = z.object({
+    name: z
+        .string()
+        .min(3, { message: 'Name must be at least 3 characters long' }),
+    description: z.string().optional()
+});
+
+type formSchemaType = z.infer<typeof formSchema>;
+
+function CreateFormButton() {
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     });
+
 
     async function onSubmit(values: formSchemaType) {
         try {
@@ -51,10 +84,15 @@ function CreateFormButton() {
                 variant: 'destructive'
             });
         }
+
+    function onSubmit(values: formSchemaType) {
+        console.log(values);
+
     }
     return (
         <Dialog>
             <DialogTrigger asChild>
+
                 <Button
                     variant={'outline'}
                     className="group border-2 border-primary/30 h-[190px] items-center justify-center flex flex-col hover:border-primary hover:cursor-pointer border-dashed gap-4"
@@ -72,6 +110,7 @@ function CreateFormButton() {
                         Create a new form to start collecting responses
                     </DialogDescription>
                 </DialogHeader>
+
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
@@ -120,6 +159,7 @@ function CreateFormButton() {
                         )}
                     </Button>
                 </DialogFooter>
+
             </DialogContent>
         </Dialog>
     );

@@ -1,27 +1,43 @@
-import { GetFormStats, GetForms } from '@/actions/form';
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle
-} from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
+
+// COMPONENTS
+  import {
+      Card,
+      CardContent,
+      CardDescription,
+      CardFooter,
+      CardHeader,
+      CardTitle
+  } from '@/components/ui/card';
+  import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+  import { Skeleton } from '@/components/ui/skeleton';
+  import { Separator } from '@/components/ui/separator';
+  import { Badge } from '@/components/ui/badge';
+  import CreateFormButton from '@/components/CreateFormButton';
+  import { Button } from '@/components/ui/button';
+
+// API and PRISMA
+  import { GetFormStats, GetForms } from '@/actions/form';
+  import { GetFormStats } from '@/actions/form';
+  import { Form } from '@prisma/client';
+
+// ICONS
+  import { LuView } from 'react-icons/lu';
+  import { FaWpforms } from 'react-icons/fa';
+  import { HiCursorClick } from 'react-icons/hi';
+  import { TbArrowBounce } from 'react-icons/tb';
+  import { BiRightArrowAlt } from 'react-icons/bi';
+  import { FaEdit } from 'react-icons/fa';
+
+// REACT and NEXT components
 import { ReactNode, Suspense } from 'react';
-import { LuView } from 'react-icons/lu';
-import { FaWpforms } from 'react-icons/fa';
-import { HiCursorClick } from 'react-icons/hi';
-import { TbArrowBounce } from 'react-icons/tb';
-import { Separator } from '@/components/ui/separator';
-import CreateFormButton from '@/components/CreateFormButton';
-import { Form } from '@prisma/client';
-import { Badge } from '@/components/ui/badge';
-import { formatDistance } from 'date-fns';
-import { Button } from '@/components/ui/button';
-import { BiRightArrowAlt } from 'react-icons/bi';
-import { FaEdit } from 'react-icons/fa';
 import Link from 'next/link';
+
+// OTHER IMPORTS
+import { formatDistance } from 'date-fns';
+
+
+
+
 export default function Home() {
     return (
         <div className="container pt-4">
@@ -81,6 +97,7 @@ function StatsCards(props: StatsCardProps) {
                 icon={<HiCursorClick className="text-green-600" />}
                 helperText="Visits that resulted in a submission"
                 value={data?.visits.toLocaleString() + '%' || ''}
+                value={data?.visits.toLocaleString() || ''}
                 loading={loading}
                 className="shadow-md shadow-green-600"
             />
@@ -89,6 +106,7 @@ function StatsCards(props: StatsCardProps) {
                 icon={<TbArrowBounce className="text-red-600" />}
                 helperText="Visits that were not submitted"
                 value={data?.visits.toLocaleString() + '%' || ''}
+                value={data?.visits.toLocaleString() || ''}
                 loading={loading}
                 className="shadow-md shadow-red-600"
             />
