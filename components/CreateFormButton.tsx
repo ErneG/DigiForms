@@ -3,6 +3,7 @@ import { formSchema, formSchemaType } from '@/schemas/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { ImSpinner2 } from 'react-icons/im';
+import { BsFileEarmarkPlus } from 'react-icons/bs';
 import * as z from 'zod';
 import { Button } from './ui/button';
 import {
@@ -26,8 +27,10 @@ import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { toast } from './ui/use-toast';
 import { CreateForm } from '@/actions/form';
+import { useRouter } from 'next/navigation';
 
 function CreateFormButton() {
+    const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     });
@@ -39,7 +42,7 @@ function CreateFormButton() {
                 title: 'Success',
                 description: 'Form created successfully'
             });
-            console.log('Form id: ', formId);
+            router.push(`/builder/${formId}`);
         } catch (error) {
             toast({
                 title: 'Error',
@@ -52,7 +55,15 @@ function CreateFormButton() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button>Create new form</Button>
+                <Button
+                    variant={'outline'}
+                    className="group border-2 border-primary/30 h-[190px] items-center justify-center flex flex-col hover:border-primary hover:cursor-pointer border-dashed gap-4"
+                >
+                    <BsFileEarmarkPlus className="h-8 w-8 text-muted-foreground group-hover:text-primary " />
+                    <p className="font-bold text-xl text-muted-foreground group-hover:text-primary">
+                        Create new form
+                    </p>
+                </Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
