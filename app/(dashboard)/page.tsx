@@ -52,7 +52,7 @@ function StatsCards(props: StatsCardProps) {
                 title="Submission rate"
                 icon={<HiCursorClick className="text-green-600" />}
                 helperText="Visits that resulted in a submission"
-                value={data?.visits.toLocaleString() || ''}
+                value={data?.visits.toLocaleString() + '%' || ''}
                 loading={loading}
                 className="shadow-md shadow-green-600"
             />
@@ -60,7 +60,7 @@ function StatsCards(props: StatsCardProps) {
                 title="Bounce rate"
                 icon={<TbArrowBounce className="text-red-600" />}
                 helperText="Visits that were not submitted"
-                value={data?.visits.toLocaleString() || ''}
+                value={data?.visits.toLocaleString() + '%' || ''}
                 loading={loading}
                 className="shadow-md shadow-red-600"
             />
