@@ -1,4 +1,10 @@
 'use client';
+import { formSchema, formSchemaType } from '@/schemas/form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { ImSpinner2 } from 'react-icons/im';
+import * as z from 'zod';
+import { Button } from './ui/button';
 import {
     Dialog,
     DialogContent,
@@ -8,47 +14,37 @@ import {
     DialogTitle,
     DialogTrigger
 } from './ui/dialog';
-import React from 'react';
-import { BsFileEarmarkPlus } from 'react-icons/bs';
-import { ImSpinner2 } from 'react-icons/im';
-import { Button } from './ui/button';
-import { Label } from './ui/label';
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
     FormMessage
 } from './ui/form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { useForm } from 'react-hook-form';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { toast } from './ui/use-toast';
-
-const formSchema = z.object({
-    name: z
-        .string()
-        .min(3, { message: 'Name must be at least 3 characters long' }),
-    description: z.string().optional()
-});
-
-type formSchemaType = z.infer<typeof formSchema>;
+import { CreateForm } from '@/actions/form';
 
 function CreateFormButton() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     });
 
-    function onSubmit(values: formSchemaType) {
+    async function onSubmit(values: formSchemaType) {
         try {
+            const formId = await CreateForm(values);
+            toast({
+                title: 'Success',
+                description: 'Form created successfully'
+            });
+            console.log('Form id: ', formId);
         } catch (error) {
             toast({
                 title: 'Error',
-                description: 'Something went wrong, please try again in a bit',
+                description:
+                    'Something went wrong, please try again in a bit. ' + error,
                 variant: 'destructive'
             });
         }
@@ -104,7 +100,7 @@ function CreateFormButton() {
                         type="submit"
                         form="create-form"
                         className="w-full mt-4"
-                        onClick={() => form.handleSubmit(onSubmit)}
+                        onClick={form.handleSubmit(onSubmit)}
                     >
                         {form.formState.isSubmitting ? (
                             <ImSpinner2 className="animate-spin" />
