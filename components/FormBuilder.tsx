@@ -9,6 +9,7 @@ import { Form } from '@prisma/client';
 import PreviewDialogButton from './PreviewDialogButton';
 import PublishFormButton from './PublishFormButton';
 import SaveFormButton from './SaveFormButton';
+import Designer from './Designer';
 // COMPONENTS
 
 function FormBuilder({ form }: { form: Form }) {
@@ -31,7 +32,7 @@ function FormBuilder({ form }: { form: Form }) {
                 </div>
             </nav>
             <div className="flex w-full flex-grow items-center justify-center relative overflow-y-auto h-[200px]  bg-accent bg-[url(/paper.svg)] dark:bg-[url(/paper-dark.svg)]">
-                Designer component
+                <Designer />
             </div>
         </main>
     );
