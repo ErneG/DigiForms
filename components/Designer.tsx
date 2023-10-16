@@ -166,7 +166,9 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
             <div
                 className={cn(
                     'flex w-full h-[120px] items-center rounded-md bg-accent/40 px-4 py-2 pointer-events-none opacity-100',
-                    mouseIsOver && 'opacity-30'
+                    mouseIsOver && 'opacity-30',
+                    topHalf.isOver && 'border-t-4 border-t-foreground',
+                    bottomHalf.isOver && 'border-b-4 border-b-foreground'
                 )}
             >
                 <DesignerElement elementInstance={element} />
