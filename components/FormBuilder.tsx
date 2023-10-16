@@ -10,7 +10,13 @@ import PreviewDialogButton from './PreviewDialogButton';
 import PublishFormButton from './PublishFormButton';
 import SaveFormButton from './SaveFormButton';
 import Designer from './Designer';
-import { DndContext, MouseSensor, useSensor, useSensors } from '@dnd-kit/core';
+import {
+    DndContext,
+    MouseSensor,
+    TouchSensor,
+    useSensor,
+    useSensors
+} from '@dnd-kit/core';
 import DragOverlayWrapper from './DragOverlayWrapper';
 // COMPONENTS
 
@@ -21,7 +27,14 @@ function FormBuilder({ form }: { form: Form }) {
         }
     });
 
-    const sensors = useSensors(mouseSensor);
+    const touchSensor = useSensor(TouchSensor, {
+        //Adding this allows dragging components also work in mobile devices (with touch-screens)
+        activationConstraint: {
+            delay: 300,
+            tolerance: 5
+        }
+    });
+    const sensors = useSensors(mouseSensor, touchSensor);
     return (
         <DndContext sensors={sensors}>
             <main className="flex flex-col w-full">
