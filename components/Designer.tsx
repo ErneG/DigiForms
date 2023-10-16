@@ -163,16 +163,20 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
                     </div>
                 </>
             )}
+            {topHalf.isOver && ( //Illuminates top border when overlay is dragged over
+                <div className="absolute top-0 w-full rounded-md h-[7px] bg-primary rounded-b-none"></div>
+            )}
             <div
                 className={cn(
                     'flex w-full h-[120px] items-center rounded-md bg-accent/40 px-4 py-2 pointer-events-none opacity-100',
-                    mouseIsOver && 'opacity-30',
-                    topHalf.isOver && 'border-t-4 border-t-foreground',
-                    bottomHalf.isOver && 'border-b-4 border-b-foreground'
+                    mouseIsOver && 'opacity-30'
                 )}
             >
                 <DesignerElement elementInstance={element} />
-            </div>
+            </div>{' '}
+            {bottomHalf.isOver && ( //Illuminates bottom border when overlay is dragged over
+                <div className="absolute bottom-0 w-full rounded-md h-[7px] bg-primary rounded-t-none"></div>
+            )}
         </div>
     );
 }
