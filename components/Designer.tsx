@@ -2,7 +2,12 @@
 
 import React, { useState } from 'react';
 import DesignerSidebar from './DesignerSidebar';
-import { DragEndEvent, useDndMonitor, useDroppable } from '@dnd-kit/core';
+import {
+    DragEndEvent,
+    useDndMonitor,
+    useDraggable,
+    useDroppable
+} from '@dnd-kit/core';
 import { cn } from '@/lib/utils';
 import useDesigner from './hooks/useDesigner';
 import {
@@ -82,7 +87,6 @@ function Designer() {
 function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
     const { removeElement } = useDesigner();
     const [mouseIsOver, setMouseIsOver] = useState<boolean>(false);
-    const DesignerElement = FormElements[element.type].designerComponent;
 
     const topHalf = useDroppable({
         id: element.id + '-top',
@@ -92,6 +96,7 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
             isTopHalfDesignerElement: true
         }
     });
+
     const bottomHalf = useDroppable({
         id: element.id + '-bottom',
         data: {
@@ -100,8 +105,28 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
             isBottomHalfDesignerElement: true
         }
     });
+
+    const draggable = useDraggable({
+        id: element.id + '-drag-handler',
+        data: {
+            type: element.type,
+            elementId: element.id,
+            isDesignerElement: true
+        }
+    });
+
+    if (draggable.isDragging) {
+        //does not show the element that is currently being dragged
+        return null;
+    }
+
+    const DesignerElement = FormElements[element.type].designerComponent;
+
     return (
         <div
+            ref={draggable.setNodeRef}
+            {...draggable.listeners}
+            {...draggable.attributes}
             className="relative h-[120px] felx flex-col text-foreground hover:cursor-pointer rounded-md ring-1 ring-accent ring-inset"
             onMouseEnter={() => {
                 setMouseIsOver(true);
