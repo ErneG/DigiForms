@@ -63,11 +63,12 @@ function Designer() {
                             Drop here
                         </p>
                     )}
-                    {droppable.isOver && (
-                        <div className="p-4 w-full">
-                            <div className="h-[120px] rounded-md bg-primary/20"></div>
-                        </div>
-                    )}
+                    {droppable.isOver &&
+                        elements.length === 0 && ( // the skeleton for a field is shown only when there are no exising elements
+                            <div className="p-4 w-full">
+                                <div className="h-[120px] rounded-md bg-primary/20"></div>
+                            </div>
+                        )}
                     {elements.length > 0 && (
                         <div className="flex flex-col w-full gap-2 p-4">
                             {elements.map((element) => (
