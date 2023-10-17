@@ -20,7 +20,8 @@ import { Button } from './ui/button';
 import { BiSolidTrash } from 'react-icons/bi';
 
 function Designer() {
-    const { elements, addElement } = useDesigner();
+    const { elements, addElement, selectedElement, setSelectedElement } =
+        useDesigner();
     const droppable = useDroppable({
         id: 'designer-drop-area',
         data: {
@@ -50,7 +51,14 @@ function Designer() {
     });
     return (
         <div className="flex w-full h-full">
-            <div className="p-4 w-full">
+            <div
+                className="p-4 w-full"
+                onClick={() => {
+                    if (selectedElement) {
+                        setSelectedElement(null);
+                    }
+                }}
+            >
                 <div
                     ref={droppable.setNodeRef}
                     className={cn(
@@ -86,7 +94,8 @@ function Designer() {
     );
 }
 function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
-    const { removeElement } = useDesigner();
+    const { removeElement, selectedElement, setSelectedElement } =
+        useDesigner();
     const [mouseIsOver, setMouseIsOver] = useState<boolean>(false);
 
     const topHalf = useDroppable({
@@ -120,6 +129,7 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
         //does not show the element that is currently being dragged
         return null;
     }
+    console.log('SELECTED ELEMENT', selectedElement);
 
     const DesignerElement = FormElements[element.type].designerComponent;
 
@@ -134,6 +144,10 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
             }}
             onMouseLeave={() => {
                 setMouseIsOver(false);
+            }}
+            onClick={(e) => {
+                e.stopPropagation();
+                setSelectedElement(element);
             }}
         >
             <div
@@ -150,7 +164,8 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
                         <Button
                             className="flex justifyc-center h-full rounded-md rounded-l-none bg-red-500"
                             variant={'outline'}
-                            onClick={() => {
+                            onClick={(e) => {
+                                e.stopPropagation();
                                 removeElement(element.id);
                             }}
                         >
