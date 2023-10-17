@@ -12,7 +12,8 @@ function PropertiesFormSidebar() {
         return null;
     }
 
-    const PropertiesForm = FormElements[selectedElement?.type].formComponent;
+    const PropertiesForm =
+        FormElements[selectedElement?.type].propertiesComponent;
     return (
         <div className="flex justify-between items-center">
             <p className="text-sm text-foreground/70">Element properties</p>
@@ -25,7 +26,7 @@ function PropertiesFormSidebar() {
             >
                 <AiOutlineClose />
             </Button>
-            <PropertiesForm />
+            <PropertiesForm elementInstance={selectedElement} />
         </div>
     );
 }
