@@ -6,7 +6,6 @@ import useDesigner from './hooks/useDesigner';
 
 function DragOverlayWrapper() {
     const { elements } = useDesigner();
-    console.log('Theese are the elements: ', elements);
     const [draggedItem, setDraggedItem] = useState<Active | null>(null);
     useDndMonitor({
         onDragStart: (event) => {
@@ -33,11 +32,9 @@ function DragOverlayWrapper() {
     }
 
     const isDesignerElement = draggedItem.data?.current?.isDesignerElement;
-    console.log('Isdesignerelement', isDesignerElement);
 
     if (isDesignerElement) {
         const elementId = draggedItem.data?.current?.elementId;
-        console.log('Element id on line', elementId);
         const element = elements.find((el) => {
             return el.id === elementId;
         });

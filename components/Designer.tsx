@@ -29,7 +29,6 @@ function Designer() {
         }
     });
 
-    console.log('Elements', elements);
     useDndMonitor({
         //can be used because the whole FormBuilder is wrapped in a DndContext
         onDragEnd: (event: DragEndEvent) => {
@@ -44,9 +43,7 @@ function Designer() {
                     idGenerator()
                 );
                 addElement(0, newElement);
-                console.log('NEW ELEMENT', newElement);
             }
-            console.log('drag event', event);
         }
     });
     return (
@@ -129,7 +126,6 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
         //does not show the element that is currently being dragged
         return null;
     }
-    console.log('SELECTED ELEMENT', selectedElement);
 
     const DesignerElement = FormElements[element.type].designerComponent;
 
