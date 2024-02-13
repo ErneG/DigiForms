@@ -6,7 +6,7 @@ CREATE TABLE "Form" (
     "published" BOOLEAN NOT NULL DEFAULT false,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "contentString" TEXT NOT NULL DEFAULT '[]',
+    "content" TEXT NOT NULL DEFAULT '[]',
     "visits" INTEGER NOT NULL DEFAULT 0,
     "submissions" INTEGER NOT NULL DEFAULT 0,
     "shareURL" TEXT NOT NULL,
@@ -23,6 +23,9 @@ CREATE TABLE "FormSubmissions" (
 
     CONSTRAINT "FormSubmissions_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Form_userId_name_key" ON "Form"("userId", "name");
 
 -- AddForeignKey
 ALTER TABLE "FormSubmissions" ADD CONSTRAINT "FormSubmissions_formId_fkey" FOREIGN KEY ("formId") REFERENCES "Form"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
