@@ -11,11 +11,13 @@ import { FormElementInstance } from '../FormElements';
 
 type DesignerContextType = {
     elements: FormElementInstance[];
+    setElements: Dispatch<SetStateAction<FormElementInstance[]>>;
     addElement: (index: number, element: FormElementInstance) => void;
     removeElement: (id: string) => void;
 
     selectedElement: FormElementInstance | null;
     setSelectedElement: Dispatch<SetStateAction<FormElementInstance | null>>;
+
     updateElement: (id: string, element: FormElementInstance) => void;
 };
 
@@ -29,6 +31,7 @@ export default function DesignerContextProvider({
     const [elements, setElements] = useState<FormElementInstance[]>([]);
     const [selectedElement, setSelectedElement] =
         useState<FormElementInstance | null>(null);
+
     const addElement = (index: number, element: FormElementInstance) => {
         setElements((prev) => {
             const newElements = [...prev];
@@ -46,7 +49,6 @@ export default function DesignerContextProvider({
             const newElements = [...prev];
             const index = newElements.findIndex((el) => el.id === id);
             newElements[index] = element;
-            console.log('updated the element? Designer context 49');
             return newElements;
         });
     };
@@ -55,11 +57,14 @@ export default function DesignerContextProvider({
         <DesignerContext.Provider
             value={{
                 elements,
+                setElements,
                 addElement,
                 removeElement,
-                updateElement,
+
                 selectedElement,
-                setSelectedElement
+                setSelectedElement,
+
+                updateElement
             }}
         >
             {children}
