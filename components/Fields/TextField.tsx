@@ -4,14 +4,15 @@ import { MdTextFields } from 'react-icons/md';
 import {
     ElementsType,
     FormElement,
-    FormElementInstance
+    FormElementInstance,
+    SubmitFunction
 } from '../FormElements';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useDesigner from '../hooks/useDesigner';
 import {
     Form,
@@ -84,19 +85,33 @@ function DesignerComponent({
 }
 
 function FormComponent({
-    elementInstance
+    elementInstance,
+    submitValue
 }: {
     elementInstance: FormElementInstance;
+    submitValue?: SubmitFunction;
 }) {
     const element = elementInstance as CustomInstance;
+
+    const [value, setValue] = useState('');
+
     const { label, require, placeHolder, helperText } = element.extraAttributes;
+
     return (
         <div className="flex flex-col gap-2 w-full">
             <Label>
-                {element.extraAttributes.label}
-                {element.extraAttributes.required && '*'}
+                {label}
+                {require && '*'}
             </Label>
-            <Input placeholder={placeHolder} />
+            <Input
+                placeholder={placeHolder}
+                onChange={(e) => setValue(e.target.value)}
+                onBlur={(e) => {
+                    if (!submitValue) return;
+                    submitValue(element.id, e.target.value);
+                }}
+                value={value}
+            />
             {helperText && (
                 <p className="text-muted-foreground text-[0.8rem]">
                     {helperText}
