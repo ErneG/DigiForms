@@ -109,7 +109,6 @@ function FormSubmitComponent({
                 <Button
                     className=" mt-8 flex flex-row gap-2"
                     onClick={() => {
-                        submitForm();
                         startTransition(submitForm);
                     }}
                     disabled={submitted || pending}
