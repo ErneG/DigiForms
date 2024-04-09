@@ -79,8 +79,9 @@ function PublishFormButton({ id }: { id: number }) {
                             e.preventDefault();
                             startTransition(publishForm);
                         }}
+                        className="flex flex-row gap-2"
                     >
-                        Proceed{' '}
+                        Proceed
                         {loading && <FaIcons className="animate-spin" />}
                     </AlertDialogAction>
                 </AlertDialogFooter>

@@ -22,6 +22,7 @@ import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import SaveFormBtn from '@/components/SaveFormButton';
 import PublishFormButton from '@/components/PublishFormButton';
 import PreviewDialogButton from '@/components/PreviewDialogButton';
+import Confetti from 'react-confetti';
 
 function FormBuilder({ form }: { form: Form }) {
     const { setElements, setSelectedElement } = useDesigner();
@@ -47,7 +48,7 @@ function FormBuilder({ form }: { form: Form }) {
         const elements = JSON.parse(form.content);
         setElements(elements);
         setSelectedElement(null);
-        const readyTimeout = setTimeout(() => setIsReady(true), 500); //TODO: remove ths timeout, set elements to undefined in DesignerContext and show spinner in Designer.tsx while the elemenets load
+        const readyTimeout = setTimeout(() => setIsReady(true), 500); //TODO: remove ths timeout, set initial value of the elements to undefined in DesignerContext and show spinner in Designer.tsx while the elemenets load
         return () => clearTimeout(readyTimeout);
     }, [form, setElements, isReady, setSelectedElement]);
 
@@ -64,10 +65,16 @@ function FormBuilder({ form }: { form: Form }) {
     if (form.published) {
         return (
             <>
+                <Confetti
+                    width={window.innerWidth}
+                    height={window.innerHeight}
+                    recycle={false}
+                    numberOfPieces={500}
+                />
                 <div className="flex flex-col items-center justify-center h-full w-full">
                     <div className="max-w-md">
                         <h1 className="text-center text-4xl font-bold text-primary border-b pb-2 mb-10">
-                            🎊🎊 Form Published 🎊🎊
+                            Form Published !
                         </h1>
                         <h2 className="text-2xl">Share this form</h2>
                         <h3 className="text-xl text-muted-foreground border-b pb-10">
@@ -93,13 +100,13 @@ function FormBuilder({ form }: { form: Form }) {
                             </Button>
                         </div>
                         <div className="flex justify-between">
-                            <Button variant={'link'} asChild>
+                            <Button variant={'outline'} asChild>
                                 <Link href={'/'} className="gap-2">
                                     <BsArrowLeft />
                                     Go back home
                                 </Link>
                             </Button>
-                            <Button variant={'link'} asChild>
+                            <Button variant={'outline'} asChild>
                                 <Link
                                     href={`/forms/${form.id}`}
                                     className="gap-2"
