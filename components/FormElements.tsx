@@ -1,6 +1,8 @@
+import { SubTitleFieldFormElement } from './Fields/SubTitleField';
 import { TextFieldFormElement } from './Fields/TextField';
+import { TitleFieldFormElement } from './Fields/TitleField';
 
-export type ElementsType = 'TextField';
+export type ElementsType = 'TextField' | 'TitleField' | 'SubTitleField';
 
 export type SubmitFunction = (key: string, value: string) => void;
 
@@ -46,5 +48,7 @@ type FormElementsType = {
 };
 
 export const FormElements: FormElementsType = {
-    TextField: TextFieldFormElement
+    TextField: TextFieldFormElement,
+    TitleField: TitleFieldFormElement,
+    SubTitleField: SubTitleFieldFormElement
 };
