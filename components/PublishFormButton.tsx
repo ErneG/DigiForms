@@ -18,7 +18,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger
 } from './ui/alert-dialog';
-import { FaIcons } from 'react-icons/fa';
+import { FaSpinner } from 'react-icons/fa';
 import { toast } from '@/components/ui/use-toast';
 import { PublishForm } from '@/actions/form';
 import { useRouter } from 'next/navigation';
@@ -82,7 +82,7 @@ function PublishFormButton({ id }: { id: number }) {
                         className="flex flex-row gap-2"
                     >
                         Proceed
-                        {loading && <FaIcons className="animate-spin" />}
+                        {loading && <FaSpinner className="animate-spin" />}
                     </AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
