@@ -89,7 +89,7 @@ async function FormDetailPage({
                     title="Bounce rate"
                     icon={<TbArrowBounce className="text-red-600" />}
                     helperText="Visits that leaves without interacting"
-                    value={submissionRate.toLocaleString() + '%' || ''}
+                    value={bounceRate.toLocaleString() + '%' || ''}
                     loading={false}
                     className="shadow-md shadow-red-600"
                 />
