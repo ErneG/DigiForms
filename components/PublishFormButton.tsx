@@ -20,16 +20,32 @@ import {
 } from './ui/alert-dialog';
 import { FaSpinner } from 'react-icons/fa';
 import { toast } from '@/components/ui/use-toast';
-import { PublishForm } from '@/actions/form';
+import { PublishForm, UpdateFormContent } from '@/actions/form';
 import { useRouter } from 'next/navigation';
+import useDesigner from './hooks/useDesigner';
 
 function PublishFormButton({ id }: { id: number }) {
+    const { elements } = useDesigner();
     const [loading, startTransition] = useTransition();
+
+    const updateFormContent = async () => {
+        try {
+            const jsonElements = JSON.stringify(elements);
+            await UpdateFormContent(id, jsonElements);
+        } catch (error) {
+            toast({
+                title: 'Error',
+                description: 'Something went wrong',
+                variant: 'destructive'
+            });
+        }
+    };
 
     const router = useRouter();
 
     async function publishForm() {
         try {
+            await updateFormContent();
             await PublishForm(id);
             toast({
                 title: 'Success',
