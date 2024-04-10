@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+    db:
+        image: postgres:13
+        ports:
+            - 6876:5432
+        environment:
+            POSTGRES_USER: $POSTGRES_USER
+            POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+            POSTGRES_DB: $DB_NAME
+        networks:
+            - nginxproxymanager_nginx-proxy-manager-nw
+    app:
+        build:
+            context: ./
+            args:
+                - POSTGRES_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$VIRTUAL_HOST:$DB_PORT/$DB_NAME
+            dockerfile: ./Dockerfile
+        ports:
+            - 3698:3000
+        restart: always
+        depends_on:
+            - db
+        networks:
+            - nginxproxymanager_nginx-proxy-manager-nw
+networks:
+    nginxproxymanager_nginx-proxy-manager-nw:
+        external: true
