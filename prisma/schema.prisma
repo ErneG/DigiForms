@@ -2,12 +2,13 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+    provider      = "prisma-client-js"
+    binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
     provider = "postgresql" //could also use an sqllite db
-    url      = env("POSTGRES_URL") // uses connection pooling
+    url      = env("DB_URL")
 }
 
 model Form {
