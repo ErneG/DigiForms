@@ -6,22 +6,7 @@ import {
     FormElementInstance
 } from '../FormElements';
 import { Label } from '../ui/label';
-import { Input } from '../ui/input';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { useEffect } from 'react';
-import useDesigner from '../hooks/useDesigner';
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage
-} from '../ui/form';
-import { RiSeparator } from 'react-icons/Ri';
+import { RiSeparator } from 'react-icons/ri';
 import { Separator } from '../ui/separator';
 
 const type: ElementsType = 'SeparatorField';
