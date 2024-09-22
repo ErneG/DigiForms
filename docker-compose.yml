@@ -1,5 +1,19 @@
 services:
-    db:
+    reverse-proxy:
+        image: traefik:v.3.1
+        command:
+            - '--api.insecure=true'
+            - '--providers.docker'
+        ports:
+            # The HTTP port of Traefik
+            - '80:80'
+            # The Web UI (enabled by --api.insecure=true)
+            - '8080:8080'
+        volumes:
+            # So that Traefik can listen to the Docker events
+            - /var/run/docker.sock:/var/run/docker.sock
+
+    digiForms-db:
         image: postgres:13
         restart: always
         ports:
@@ -13,7 +27,7 @@ services:
         networks:
             - default
 
-    app:
+    digiForms:
         env_file:
             - .env
         build:
